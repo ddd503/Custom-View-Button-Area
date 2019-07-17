@@ -14,6 +14,13 @@ final class ButtonAreaView: UIView {
     private let maxButtonCount = 3
     private var buttons = [UIButton]()
 
+    var state: ButtonAreaStatus? {
+        didSet {
+            guard let state = state else { return }
+            updateState(state)
+        }
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -71,7 +78,17 @@ final class ButtonAreaView: UIView {
     }
 
     @objc func tapped(sender: UIButton) {
-        print("tapped")
+
     }
 
+    private func updateState(_ state: ButtonAreaStatus) {
+        removeSubviews()
+        // ボタンの再配置（問題はアクションの割り当てができない）
+    }
+
+    private func removeSubviews() {
+        subviews.forEach {
+            $0.removeFromSuperview()
+        }
+    }
 }
