@@ -108,9 +108,14 @@ final class ButtonAreaView: UIView {
         info.enumerated().forEach {
             let button = UIButton(frame: buttonFrame)
             button.setTitle($0.element.title, for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
             button.backgroundColor = $0.element.color
             button.tag = $0.offset + 1
             button.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(shrinkAnimation(sender:)), for: .touchDown)
+            button.addTarget(self, action: #selector(restoreAnimation(sender:)), for: [.touchUpInside, .touchDragOutside])
             buttons.append(button)
             button.layer.masksToBounds = true
             button.layer.cornerRadius = buttonFrame.width / 2
@@ -138,6 +143,18 @@ final class ButtonAreaView: UIView {
             guard sender.tag <= completeButtons.count else { return }
             completeButtons[sender.tag - 1].action()
         }
+    }
+
+    @objc private func shrinkAnimation(sender: UIButton) {
+        UIView.animate(withDuration: 0.15, delay: 0.0, options: .curveEaseIn, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+        })
+    }
+
+    @objc private func restoreAnimation(sender: UIButton) {
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn, animations: {
+            sender.transform = .identity
+        })
     }
 
     private func removeSubviews() {
