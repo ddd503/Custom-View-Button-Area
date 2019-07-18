@@ -8,57 +8,66 @@
 
 import UIKit
 
-final class ButtonAreaView: UIView {
+// Viewの状態を表すenum
+enum ButtonAreaState: CaseIterable {
+    case prepare
+    case run
+    case wait
+    case complete
+}
 
+final class ButtonAreaView: UIView {
     private let buttonFrame = CGRect(origin: .zero, size: CGSize(width: 80, height: 80))
     private let maxButtonCount = 3
     private var buttons = [UIButton]()
 
-    var state: ButtonAreaStatus? {
+    // ステータス毎の配置ボタン情報
+    private var prepareButtons = [ButtonInfo]()
+    private var runButtons = [ButtonInfo]()
+    private var waitButtons = [ButtonInfo]()
+    private var completeButtons = [ButtonInfo]()
+
+    private var state: ButtonAreaState? {
         didSet {
             guard let state = state else { return }
             updateState(state)
         }
     }
 
+    // MARK: - Lifecycle
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        // 配置調整
-        adjustButtonsPosition()
+        // Viewのlayoutが確定後、ボタンを置いていく
+        setButtons()
     }
 
-    private func setup() {
-        // 初期配置
-        let button = UIButton(frame: buttonFrame)
-        button.setTitle("Start", for: .normal)
-        button.backgroundColor = .blue
-        button.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
-        buttons.append(button)
-        addSubview(button)
+    // MARK: - Internal
 
-        let button2 = UIButton(frame: buttonFrame)
-        button2.setTitle("Stop", for: .normal)
-        button2.backgroundColor = .red
-        button2.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
-        buttons.append(button2)
-        addSubview(button2)
+    func setup(prepareButtons: [ButtonInfo], runButtons: [ButtonInfo],
+               waitButtons: [ButtonInfo], completeButtons: [ButtonInfo]) {
+        self.prepareButtons = prepareButtons
+        self.runButtons = runButtons
+        self.waitButtons = waitButtons
+        self.completeButtons = completeButtons
 
-        let button3 = UIButton(frame: buttonFrame)
-        button3.setTitle("Done", for: .normal)
-        button3.backgroundColor = .orange
-        button3.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
-        buttons.append(button3)
-        addSubview(button3)
+        changeViewState(.prepare)
     }
 
-    private func adjustButtonsPosition() {
+    func changeViewState(_ state: ButtonAreaState) {
+        self.state = state
+    }
+
+    // MARK: - Private
+
+    private func setButtons() {
         let centerY = frame.height / 2
         var points = [CGPoint]()
+        // 最大表示ボタン数は3としている（配列の前から３つを表示）
         let displayButtons = buttons.enumerated().compactMap { $0.offset < maxButtonCount ? $0.element : nil}
 
         (0 ..< displayButtons.count).forEach { [weak self] (buttonCount) in
@@ -74,16 +83,61 @@ final class ButtonAreaView: UIView {
         displayButtons.enumerated().forEach { (offset, button) in
             guard offset < points.count else { return }
             button.center = points[offset]
+            addSubview(button)
         }
     }
 
-    @objc func tapped(sender: UIButton) {
+    private func updateState(_ state: ButtonAreaState) {
+        removeSubviews()
 
+        switch state {
+        case .prepare:
+            createButtons(info: prepareButtons)
+        case .run:
+            createButtons(info: runButtons)
+        case .wait:
+            createButtons(info: waitButtons)
+        case .complete:
+            createButtons(info: completeButtons)
+        }
     }
 
-    private func updateState(_ state: ButtonAreaStatus) {
-        removeSubviews()
-        // ボタンの再配置（問題はアクションの割り当てができない）
+    private func createButtons(info: [ButtonInfo]) {
+        buttons.removeAll()
+
+        info.enumerated().forEach {
+            let button = UIButton(frame: buttonFrame)
+            button.setTitle($0.element.title, for: .normal)
+            button.backgroundColor = $0.element.color
+            button.tag = $0.offset + 1
+            button.addTarget(self, action: #selector(tapped(sender:)), for: .touchUpInside)
+            buttons.append(button)
+            button.layer.masksToBounds = true
+            button.layer.cornerRadius = buttonFrame.width / 2
+        }
+
+        // viewのlayoutを更新
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
+
+    @objc private func tapped(sender: UIButton) {
+        guard let state = state else { return }
+
+        switch state {
+        case .prepare:
+            guard sender.tag <= prepareButtons.count else { return }
+            prepareButtons[sender.tag - 1].action()
+        case .run:
+            guard sender.tag <= runButtons.count else { return }
+            runButtons[sender.tag - 1].action()
+        case .wait:
+            guard sender.tag <= waitButtons.count else { return }
+            waitButtons[sender.tag - 1].action()
+        case .complete:
+            guard sender.tag <= completeButtons.count else { return }
+            completeButtons[sender.tag - 1].action()
+        }
     }
 
     private func removeSubviews() {

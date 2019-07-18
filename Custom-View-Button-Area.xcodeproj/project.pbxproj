@@ -13,7 +13,7 @@
 		45A0D5CB22DF63F5009C167D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45A0D5CA22DF63F5009C167D /* Assets.xcassets */; };
 		45A0D5CE22DF63F5009C167D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45A0D5CC22DF63F5009C167D /* LaunchScreen.storyboard */; };
 		45A0D5D622DF6874009C167D /* ButtonAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0D5D522DF6874009C167D /* ButtonAreaView.swift */; };
-		45A0D5DA22DF6966009C167D /* ButtonAreaStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0D5D922DF6966009C167D /* ButtonAreaStatus.swift */; };
+		45A0D5DC22E0AFA1009C167D /* ButtonInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0D5DB22E0AFA1009C167D /* ButtonInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		45A0D5CD22DF63F5009C167D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45A0D5CF22DF63F5009C167D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45A0D5D522DF6874009C167D /* ButtonAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAreaView.swift; sourceTree = "<group>"; };
-		45A0D5D922DF6966009C167D /* ButtonAreaStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAreaStatus.swift; sourceTree = "<group>"; };
+		45A0D5DB22E0AFA1009C167D /* ButtonInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				45A0D5D522DF6874009C167D /* ButtonAreaView.swift */,
-				45A0D5D922DF6966009C167D /* ButtonAreaStatus.swift */,
+				45A0D5DB22E0AFA1009C167D /* ButtonInfo.swift */,
 			);
 			path = ButtonAreaView;
 			sourceTree = "<group>";
@@ -159,8 +159,8 @@
 			files = (
 				45A0D5C622DF63F4009C167D /* ViewController.swift in Sources */,
 				45A0D5D622DF6874009C167D /* ButtonAreaView.swift in Sources */,
-				45A0D5DA22DF6966009C167D /* ButtonAreaStatus.swift in Sources */,
 				45A0D5C422DF63F4009C167D /* AppDelegate.swift in Sources */,
+				45A0D5DC22E0AFA1009C167D /* ButtonInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
