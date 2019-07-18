@@ -23,12 +23,15 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dAf-Sq-f42">
-                                <rect key="frame" x="41.5" y="299.5" width="331" height="29"/>
+                                <rect key="frame" x="41.5" y="428" width="331" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="syV-cH-sSm"/>
+                                </constraints>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title="Third"/>
-                                    <segment title="Fourth"/>
+                                    <segment title="Prepare"/>
+                                    <segment title="Run"/>
+                                    <segment title="Wait"/>
+                                    <segment title="Complete"/>
                                 </segments>
                                 <connections>
                                     <action selector="changeSegment:" destination="BYZ-38-t0r" eventType="valueChanged" id="HWK-Y2-RQ7"/>
@@ -37,7 +40,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dAf-Sq-f42" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.7" id="06N-kD-Vr7"/>
+                            <constraint firstItem="dAf-Sq-f42" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="06N-kD-Vr7"/>
                             <constraint firstItem="dAf-Sq-f42" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="3C5-kv-ItI"/>
                             <constraint firstItem="dAf-Sq-f42" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mbo-pz-1yD"/>
                             <constraint firstItem="rDd-pW-jqi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SnM-uI-xHj"/>
